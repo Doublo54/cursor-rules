@@ -1,0 +1,82 @@
+---
+description: Solidity rules
+globs: *.sol
+---
+### **Solidity Best Practices:**
+
+#### **General Coding Standards:**
+
+- Use **explicit function visibility modifiers** (`public`, `private`, `external`, `internal`).
+- Follow **consistent naming conventions**:
+  - `CamelCase` for contracts.
+  - `PascalCase` for interfaces (prefixed with `I`).
+  - `camelCase` for functions and variables.
+  - `SNAKE_CASE` for constants.
+- Use **NatSpec comments** (`@dev`, `@param`, `@return`) for all `public` and `external` functions.
+- **Minimize deep inheritance chains** – Favor composition over inheritance.
+- **Leverage `calldata` over `memory`** where applicable for gas efficiency.
+- **Use constructor arguments over hardcoded values** for flexibility.
+- **Be mindful of default storage values** to prevent unexpected behavior.
+- **Guard against uninitialized storage variables** that may be unintentionally set.
+- **Use immutable variables** for values set once at construction time.
+
+#### **Security & Access Control:**
+
+- Use **OpenZeppelin’s AccessControl** for fine-grained role management.
+- Implement **function modifiers** for common checks (e.g., onlyOwner, reentrancy protection).
+- Use **ReentrancyGuard** for functions handling external calls.
+- **Follow Checks-Effects-Interactions** to prevent reentrancy.
+- **Use pull over push payment patterns** to mitigate DoS risks.
+- **Implement timelocks and multisig controls** for critical operations.
+- **Use OpenZeppelin’s Address library** for safe external calls.
+- **Explicitly handle self-destructed contracts** when interacting with external addresses.
+
+#### **Upgradeability & Maintainability:**
+
+- Use **proxy patterns (UUPS, Transparent)** for upgradable contracts.
+- Protect **initializers in upgradeable contracts** with proper access control.
+- Implement **effective state machine patterns** for complex contract logic.
+- **Use libraries** for complex operations to improve reusability and reduce contract size.
+- Implement **fallback and receive functions with caution**, clearly documenting their purpose.
+
+#### **Gas Optimization:**
+
+- Use **storage packing** for struct and state variables.
+- Avoid **storage reads in loops**; cache data in memory.
+- Minimize **state variable updates**; batch writes where possible.
+- Use **custom errors instead of revert strings** for gas savings.
+- **Favor `mapping` over `array`** for large datasets when index-based access isn’t required.
+- Optimize **event emissions**, avoiding redundant data.
+- **Test with gas limit constraints** to simulate real-world conditions.
+- Use **assembly only when necessary**, and document extensively.
+- Consider **`unchecked` blocks** where safe for minor gas savings.
+
+#### **ERC Standards & DeFi-Specific:**
+
+- Use **OpenZeppelin’s SafeERC20** for interacting with ERC20 tokens.
+- Implement **ERC20Permit (EIP-2612) for gasless approvals**.
+- Use **ERC20Snapshot** for tracking historical balances.
+- Implement **ERC20Votes for governance tokens**.
+- Implement **slippage protection** for DEX-related functionalities.
+- Use **Chainlink VRF for secure randomness**.
+
+#### **Testing & Quality Assurance:**
+
+- Implement **unit, integration, and end-to-end tests**.
+- Use **property-based testing** for uncovering edge cases.
+- Integrate **static analysis tools** (Slither, Mythril).
+- Conduct **regular security audits and bug bounties**.
+- Use **test coverage tools** and aim for high coverage on critical paths.
+
+#### **Development Workflow & Deployment:**
+
+- Use **Hardhat for testing and debugging**.
+- Implement **CI/CD pipelines** for automated deployments.
+- Utilize **static type checking and linting tools** in pre-commit hooks.
+- Use **deterministic deployment (CREATE2)** for predictable contract addresses.
+
+#### **Documentation & API Design:**
+
+- Document **why** decisions are made, not just what the code does.
+- Maintain **up-to-date API documentation** for external integrations.
+- Create and maintain **architecture diagrams and decision logs**.
